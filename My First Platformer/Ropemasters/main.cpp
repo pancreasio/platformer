@@ -5,9 +5,11 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(360, 280), "STP Example");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "STP Example");
 	tmx::TileMap map("res/caveTM.tmx");
-
+	sf::Vector2f center = { 400.0f,300.0f };
+	sf::View stdView({ center.x,center.y, 800.0f, 600.0f });
+	stdView.setCenter(center.x,center.y);
 	map.ShowObjects(); // Display all the layer objects.
 
 	//map.GetLayer("World").visible = false; // Hide a Layer named World
@@ -21,12 +23,14 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
+
 		// Clear screen
 		window.clear();
 		// Draw the map
 		window.draw(map);
 		// Update the window
 		window.display();
+		window.setView(stdView);
 	}
 
 	return EXIT_SUCCESS;
