@@ -11,12 +11,14 @@ int main()
 	sf::View stdView({ center.x,center.y, 800.0f, 600.0f });
 	stdView.setCenter(center.x,center.y);
 	sf::Keyboard stdInput;
+	sf::Clock clock;
 	map.ShowObjects(); // Display all the layer objects.
 
 	//map.GetLayer("World").visible = false; // Hide a Layer named World
 
 										   // Start the game loop
 	while (window.isOpen()) {
+		sf::Time elapsed = clock.restart();
 		// Process events
 		sf::Event event;
 		while (window.pollEvent(event)) {
@@ -38,6 +40,7 @@ int main()
 			center.y += 2;
 		}
 		stdView.setCenter(center.x, center.y);
+
 
 
 		// Clear screen
