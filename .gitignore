@@ -23,6 +23,8 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+!My First Platformer/lib/SFML-2.5.1/bin
+!My First Platformer/lib/STP/bin
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
