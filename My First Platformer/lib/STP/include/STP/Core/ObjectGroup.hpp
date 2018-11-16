@@ -108,7 +108,7 @@ class STP_API ObjectGroup : public MapObject {
  private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
- private:
+ public:
     std::vector<tmx::ObjectGroup::Object> objects_;
 };
 
@@ -152,7 +152,7 @@ class STP_API ObjectGroup::Object : public sf::Drawable, public tmx::Properties 
  private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
- private:
+ public:
     std::string name_;
     std::string type_;
     unsigned int x_, y_;

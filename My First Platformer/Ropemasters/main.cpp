@@ -2,16 +2,18 @@
 #include <SFML\Window.hpp>
 #include <SFML\Audio.hpp>
 #include <STP\TMXLoader.hpp>
+#include <vector>
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "STP Example");
+	sf::RenderWindow window(sf::VideoMode(1200, 800), "STP Example");
 	tmx::TileMap map("res/caveTM.tmx");
-	sf::Vector2f center = { 400.0f,300.0f };
-	sf::View stdView({ center.x,center.y, 800.0f, 600.0f });
+	sf::Vector2f center = { 800.0f,600.0f };
+	sf::View stdView({ center.x,center.y, 1200, 800 });
 	stdView.setCenter(center.x,center.y);
 	sf::Keyboard stdInput;
 	sf::Clock clock;
+	sf::RectangleShape p1;
 	map.ShowObjects(); // Display all the layer objects.
 
 	//map.GetLayer("World").visible = false; // Hide a Layer named World
@@ -26,18 +28,20 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
+		   
+		
 
-		if (stdInput.isKeyPressed(stdInput.A)) {
-			center.x -= 2;
+		if (stdInput.isKeyPressed(stdInput.A)&&center.x - stdView.getSize().x / 2 >0) {
+			center.x -= 1;
 		}
-		if (stdInput.isKeyPressed(stdInput.D)) {
-			center.x += 2;
+		if (stdInput.isKeyPressed(stdInput.D)&& center.x + stdView.getSize().x /2 < map.GetWidth()*70) {
+			center.x += 1;
 		}
-		if (stdInput.isKeyPressed(stdInput.W)) {
-			center.y -= 2;
+		if (stdInput.isKeyPressed(stdInput.W)&& center.y - stdView.getSize().y /2 > 0) {
+			center.y -= 1;
 		}
-		if (stdInput.isKeyPressed(stdInput.S)) {
-			center.y += 2;
+		if (stdInput.isKeyPressed(stdInput.S)&& center.y + stdView.getSize().y / 2 < map.GetHeight()*70) {
+			center.y += 1;
 		}
 		stdView.setCenter(center.x, center.y);
 
@@ -47,6 +51,7 @@ int main()
 		window.clear();
 		// Draw the map
 		window.draw(map);
+		
 		// Update the window
 		window.display();
 		window.setView(stdView);
