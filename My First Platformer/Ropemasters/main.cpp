@@ -13,10 +13,15 @@ int main()
 	stdView.setCenter(center.x,center.y);
 	sf::Keyboard stdInput;
 	sf::Clock clock;
-	sf::RectangleShape p1;
+	sf::Texture pjtex;
+	sf::Sprite pj;
+	sf::Sprite tile0;
 	map.ShowObjects(); // Display all the layer objects.
 
 	//map.GetLayer("World").visible = false; // Hide a Layer named World
+	pjtex.loadFromFile("res/pj.png");
+	pj.setTexture(pjtex);
+	pj.setPosition(center);
 
 										   // Start the game loop
 	while (window.isOpen()) {
@@ -45,13 +50,19 @@ int main()
 		}
 		stdView.setCenter(center.x, center.y);
 
-
-
+		if (stdInput.isKeyPressed(stdInput.Right)) {
+			pj.move(5* elapsed.asMilliseconds(),0);
+		}
+		if (stdInput.isKeyPressed(stdInput.Left)) {
+			pj.move(-5 * elapsed.asMilliseconds(), 0);
+			
+		}
+		
 		// Clear screen
 		window.clear();
 		// Draw the map
 		window.draw(map);
-		
+		window.draw(pj);
 		// Update the window
 		window.display();
 		window.setView(stdView);
