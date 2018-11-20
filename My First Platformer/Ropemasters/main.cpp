@@ -32,16 +32,16 @@ int main()
 		
 
 		if (stdInput.isKeyPressed(stdInput.A)&&center.x - stdView.getSize().x / 2 >0) {
-			center.x -= 1;
+			center.x -= 10 * elapsed.asMilliseconds();
 		}
 		if (stdInput.isKeyPressed(stdInput.D)&& center.x + stdView.getSize().x /2 < map.GetWidth()*70) {
-			center.x += 1;
+			center.x += 10 * elapsed.asMilliseconds();
 		}
 		if (stdInput.isKeyPressed(stdInput.W)&& center.y - stdView.getSize().y /2 > 0) {
-			center.y -= 1;
+			center.y -= 10 * elapsed.asMilliseconds();
 		}
 		if (stdInput.isKeyPressed(stdInput.S)&& center.y + stdView.getSize().y / 2 < map.GetHeight()*70) {
-			center.y += 1;
+			center.y += 10 * elapsed.asMilliseconds();
 		}
 		stdView.setCenter(center.x, center.y);
 
