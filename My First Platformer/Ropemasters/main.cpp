@@ -10,7 +10,7 @@ int main()
 	tmx::TileMap map("res/caveTM.tmx");
 	sf::Vector2f center = { 800.0f,600.0f };
 	sf::Vector2f velocity = { 0.0f,0.0f };
-	float gravity = 9.8;
+	float gravity = 1900.0f, platformLimit = 150.0f;
 	sf::View stdView({ center.x,center.y, 1200, 800 });
 	stdView.setCenter(center.x,center.y);
 	sf::Keyboard stdInput;
@@ -18,7 +18,7 @@ int main()
 	sf::Texture pjtex;
 	sf::Sprite pj, tile;
 	sf::Texture tile0;
-	bool canJump = false;
+	bool canJump = false, canLeft = false, canRight = false;
 	map.ShowObjects(); // Display all the layer objects.
 
 	//map.GetLayer("World").visible = false; // Hide a Layer named World
@@ -43,7 +43,8 @@ int main()
 		}
 		
 		   
-		
+		canRight = false;
+		canLeft = true;
 
 		if (stdInput.isKeyPressed(stdInput.A)&&center.x - stdView.getSize().x / 2 >0) {
 			center.x -= 400* elapsed.asSeconds();
@@ -60,16 +61,13 @@ int main()
 		stdView.setCenter(center.x, center.y);
 
 		if (stdInput.isKeyPressed(stdInput.Right)) {
-			if (!pj.getGlobalBounds().intersects(tile.getGlobalBounds())||pj.getPosition().x + pj.getTexture()->getSize().x * pj.getScale().x < tile.getPosition().x) {
-				pj.move(250 * elapsed.asSeconds(), 0);
-			}
+			velocity.x = 300;
 		}
 		if (stdInput.isKeyPressed(stdInput.Left)) {
-			if (!pj.getGlobalBounds().intersects(tile.getGlobalBounds()) || pj.getPosition().x + pj.getTexture()->getSize().x * pj.getScale().x > tile.getPosition().x) {
-				pj.move(-250 * elapsed.asSeconds(), 0);
-			}
+			velocity.x = -300;
 		}
-		if (pj.getPosition().y + pj.getTexture()->getSize().y * pj.getScale().y < 600.0f) {
+
+		if (pj.getPosition().y + pj.getTexture()->getSize().y * pj.getScale().y < 665.0f) {
 			velocity.y += gravity * elapsed.asSeconds();
 		}
 		else {
@@ -77,11 +75,25 @@ int main()
 			canJump = true;
 		}
 		if (stdInput.isKeyPressed(stdInput.Up) && canJump) {
-			velocity.y = -2500 * elapsed.asSeconds();
+			velocity.y = -700;
 			canJump = false;
 		}
+
+		if (pj.getGlobalBounds().intersects(tile.getGlobalBounds())) {
+			if (pj.getPosition().y + pj.getTexture()->getSize().y * (pj.getScale().y- 0.02f) < tile.getPosition().y && tile.getPosition().x-platformLimit<pj.getPosition().x<tile.getPosition().x + tile.getScale().x * tile.getTexture()->getSize().x + platformLimit) {
+				velocity.y = 0;
+				pj.move({0.0f,-0.5f});
+				canJump = true;
+			}
+			if (pj.getPosition().x < tile.getPosition().x) {
+				velocity.x = 0;
+				//pj.move({-0.5f,0.0f});
+				
+			}
+		}
 		
-		pj.move({0.0f,velocity.y});
+		pj.move({velocity.x * elapsed.asSeconds(),velocity.y * elapsed.asSeconds()});
+		velocity.x = 0;
 
 		// Clear screen
 		window.clear();
