@@ -1,7 +1,9 @@
- #include <SFML\Graphics.hpp>
+#include <SFML\Graphics.hpp>
 #include <SFML\Window.hpp>
 #include <SFML\Audio.hpp>
 #include <STP\TMXLoader.hpp>
+#define CUTE_C2_IMPLEMENTATION
+#include "cute_c2.h"
 #include <vector>
 
 int main()
@@ -18,6 +20,7 @@ int main()
 	sf::Texture pjtex;
 	sf::Sprite pj, tile;
 	sf::Texture tile0;
+	
 	bool canJump = false, canLeft = false, canRight = false;
 	map.ShowObjects(); // Display all the layer objects.
 
